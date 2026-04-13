@@ -15,6 +15,7 @@ import { Task } from './task.model';
   selector: 'app-task-list',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [LowerCasePipe],
   template: `
     <div class="task-container">
       <h2>Tareas del Proyecto</h2>
@@ -23,9 +24,9 @@ import { Task } from './task.model';
         <label for="statusFilter">Filtrar por estado: </label>
         <select id="statusFilter" (change)="onFilterChange($event)">
           <option value="TODAS">Todas</option>
-          <option value="pendiente">Pendiente</option>
-          <option value="en progreso">En Progreso</option>
-          <option value="completada">Completada</option>
+          <option value="TODO">Pendiente</option>
+          <option value="IN_PROGRESS">En Progreso</option>
+          <option value="DONE">Completada</option>
         </select>
       </div>
 
@@ -44,14 +45,14 @@ import { Task } from './task.model';
           <div class="task-grid">
             @for (task of filteredTasks(); track task.id) {
               <div class="task-card">
-                <h3>{{ task.titulo }}</h3>
+                <h3>{{ task.title }}</h3>
                 <p>
                   <strong>Estado:</strong>
-                  <span class="badge {{ task.estado | lowercase }}">{{ task.estado }}</span>
+                  <span class="badge {{ task.status | lowercase }}">{{ task.status }}</span>
                 </p>
                 <p>
                   <strong>Fecha límite:</strong>
-                  {{ task.fechaLimite ? task.fechaLimite : 'Sin fecha' }}
+                  {{ task.finishedAt ? task.finishedAt : 'Sin fecha' }}
                 </p>
               </div>
             }
@@ -119,34 +120,32 @@ import { Task } from './task.model';
         font-weight: bold;
         text-transform: uppercase;
       }
-      .pendiente {
+      /* Los colores ahora coinciden con los estados en inglés de tu JavaBUSCAR???????? */
+      .todo {
         background-color: #fff3e0;
         color: #e65100;
       }
-      .en {
+      .in_progress {
         background-color: #e3f2fd;
         color: #1565c0;
-      } /* Para 'en progreso' */
-      .completada {
+      }
+      .done {
         background-color: #e8f5e9;
         color: #2e7d32;
       }
     `,
   ],
-  imports: [LowerCasePipe],
 })
 export class TaskListComponent implements OnInit {
   private taskService = inject(TaskService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  // Signals para el estado
   tasks = signal<Task[]>([]);
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
   filterStatus = signal<string>('TODAS');
 
-  // Computed signal: se recalcula automáticamente cuando cambia 'tasks' o 'filterStatus'
   filteredTasks = computed(() => {
     const currentFilter = this.filterStatus();
     const allTasks = this.tasks();
@@ -154,11 +153,13 @@ export class TaskListComponent implements OnInit {
     if (currentFilter === 'TODAS') {
       return allTasks;
     }
-    return allTasks.filter((t) => t.estado.toLowerCase() === currentFilter.toLowerCase());
+    // Usamos status en lugar de estado
+    return allTasks.filter(
+      (t) => t.status && t.status.toLowerCase() === currentFilter.toLowerCase(),
+    );
   });
 
   ngOnInit(): void {
-    // Obtener el ID del proyecto desde la URL (/proyectos/:id/tareas)
     const projectId = this.route.snapshot.paramMap.get('id');
 
     if (projectId) {
@@ -180,11 +181,6 @@ export class TaskListComponent implements OnInit {
       error: (err: Error) => {
         this.error.set(err.message);
         this.loading.set(false);
-
-        // Manejo de expiración de token o falta de permisos (403/401)
-        if (err.message.includes('permisos') || err.message.includes('expiró')) {
-          // this.router.navigate(['/login']); // Descomentar cuando el login exista
-        }
       },
     });
   }

@@ -8,11 +8,11 @@ import { Task } from './task.model';
 })
 export class TaskService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8081/proyectos';
+  private apiUrl = 'http://localhost:8081/projects';
 
   getTasksByProjectId(projectId: string): Observable<Task[]> {
     return this.http
-      .get<Task[]>(`${this.apiUrl}/${projectId}/tareas`)
+      .get<Task[]>(`${this.apiUrl}/${projectId}/tasks`)
       .pipe(catchError(this.handleError));
   }
 

@@ -1,6 +1,6 @@
 export interface Task {
   id: number;
-  titulo: string;
-  estado: string;
-  fechaLimite: string | null;
+  title: string;
+  status: string;
+  finishedAt: string | null;
 }
