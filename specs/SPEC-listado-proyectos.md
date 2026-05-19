@@ -3,48 +3,9 @@
 | Campo | Descripción y criterio de calidad |
 | :--- | :--- |
 | **Nombre de la feature** | Ver listado general de proyectos. |
-
-| **Descripción general** | El usuario puede visualizar todos los proyectos registrados en el sistema. Cada proyecto muestra su nombre, estado, fecha de inicio y fecha de fin. Permite filtrar los proyectos rápidamente según su estado. |
-
-| **Endpoints involucrados** | **GET /projects**<br> - Parámetros de entrada (opcionales): `status`, `startDate`, `endDate`<br> - Response: array de objetos `{ id, name, startDate, endDate, status, description }`<br> - Códigos: 200 OK, 500 Internal Server Error. |
-
-| **Restricciones de negocio** | - El campo `status` solo puede tomar los valores: `PLANNED`, `ACTIVE` o `CLOSED`.<br> - Si no hay proyectos cargados, se debe mostrar un mensaje amigable al usuario en lugar de una tabla vacía. |
-
-| **Lineamientos técnicos** | - Angular 17+ con Standalone Components.<br> - Estilos con CSS puro (o Bootstrap si se decide agregar).<br> - Comunicación con backend: `HttpClient` encapsulado en un `ProjectService`.<br> - Gestión de estado: Uso de `Signals` para almacenar el listado y el filtro de estado. |
-
-| **Criterios de aceptación** | **Criterio 1: Carga exitosa**<br> *Dado* que existen proyectos en la base de datos,<br> *Cuando* el usuario navega a la ruta principal `/proyectos`,<br> *Entonces* ve una tabla o grilla con la lista de proyectos mostrando nombre, fechas y estado.<br><br> **Criterio 2: Listado vacío**<br> *Dado* que no hay proyectos en el sistema,<br> *Cuando* el usuario ingresa a la pantalla,<br> *Entonces* ve el mensaje "No hay proyectos registrados actualmente".<br><br> **Criterio 3: Filtrado por estado**<br> *Dado* que el usuario está viendo el listado,<br> *Cuando* selecciona el filtro "ACTIVE",<br> *Entonces* la vista se actualiza para mostrar únicamente los proyectos con ese estado. |
-
-| **Prompts utilizados** | *(1. Rol: Actúa como un desarrollador Senior de Angular 17+ con experiencia en aplicaciones empresariales y uso de Standalone Components.
-
-2. Contexto del sistema:
-Estoy desarrollando el frontend de una app de gestión de tareas y proyectos. El backend es una API REST en Java.
-
-3. Especificación de la Feature:
-Implementa el componente para el "Listado de tareas de un proyecto".
-
-Endpoint: GET /proyectos/:id/tareas
-
-Muestra una lista donde cada tarea tiene: título, estado y fecha límite (si es null, mostrar "Sin fecha").
-
-Debe permitir filtrar por estado usando Signals.
-
-Manejar estado de carga, lista vacía y errores (como un 403 o token expirado).
-
-4. Restricciones Técnicas:
-
-Angular 17+ con componentes standalone (ChangeDetectionStrategy.OnPush).
-
-Usa HttpClient. (Asume que el interceptor JWT ya existirá, no lo crees).
-
-Usa Signals de Angular para el estado de las tareas y el filtro, no uses BehaviorSubjects.
-
-Usa CSS simple para que se vea ordenado.
-
-5. Formato de Salida:
-Genera el código para:
-
-task.model.ts (la interfaz de la tarea).
-
-task.service.ts (el servicio que hace el GET, recibiendo el ID del proyecto).
-
-task-list.component.ts (el componente con su template HTML y estilos).)* |
+| **Descripción general** | El usuario puede visualizar todos los proyectos registrados en el sistema desde la pantalla principal. Cada proyecto muestra su nombre, descripción, estado, fecha de inicio y fecha de fin. Permite filtrar los proyectos rápidamente según su estado y acceder a sus tareas. |
+| **Endpoints involucrados** | **GET /projects**<br> - Parámetros de entrada (opcionales): `status`, `startDate`, `endDate`<br> - Response: array de objetos `{ id, name, startDate, endDate, status, description }`<br> - Códigos: 200 OK, 401 Unauthorized, 403 Forbidden, 500 Internal Server Error. |
+| **Restricciones de negocio** | - El campo `status` solo puede tomar los valores: `PLANNED`, `ACTIVE` o `CLOSED`.<br> - Se debe diferenciar visualmente si el sistema no tiene ningún proyecto cargado de si un filtro aplicado no arrojó resultados. |
+| **Lineamientos técnicos** | - Angular 17+ con Standalone Components.<br> - Estilos con CSS limpio en formato de grilla de tarjetas.<br> - Comunicación con backend: `HttpClient` encapsulado en un `ProjectService`.<br> - Gestión de estado: Uso de `Signals` para almacenar el listado, estados de carga y filtros. |
+| **Criterios de aceptación** | **Criterio 1: Carga exitosa**<br> *Dado* que existen proyectos en la base de datos,<br> *Cuando* el usuario navega a la ruta principal `/`,<br> *Entonces* ve una grilla con las tarjetas de los proyectos mostrando su información y un botón para ver tareas.<br><br> **Criterio 2: Listado vacío total**<br> *Dado* que no hay ningún proyecto registrado en el sistema,<br> *Cuando* el usuario ingresa a la pantalla sin filtros activos,<br> *Entonces* ve el mensaje "No hay proyectos registrados actualmente".<br><br> **Criterio 3: Listado vacío por filtrado**<br> *Dado* que existen proyectos pero ninguno coincide con el estado seleccionado,<br> *When* el usuario cambia el selector de filtro,<br> *Then* el sistema muestra el mensaje "No se encontraron proyectos con el estado seleccionado".<br><br> **Criterio 4: Filtrado por estado**<br> *Dado* que el usuario está viendo el listado,<br> *Cuando* selecciona el filtro "ACTIVE",<br> *Entonces* la vista se actualiza de forma reactiva para mostrar únicamente los proyectos activos.<br><br> **Criterio 5: Manejo de errores**<br> *Dado* que el token de sesión expiró o el backend no responde (error 403, 404 o conexión rechazada),<br> *Cuando* la aplicación intenta buscar los proyectos,<br> *Entonces* se oculta la grilla y se muestra una tarjeta de error con un mensaje amigable indicando el problema. |
+| **Prompts utilizados** | *(1. Rol: Actúa como un desarrollador Frontend.<br>2. Contexto: Frontend de una app de gestión conectada a un backend en Java en el puerto 8081.<br>3. Especificación: Implementa el componente "Listado de Proyectos" consumiendo el endpoint GET /projects. Muestra una grilla de tarjetas con nombre, descripción, estado (PLANNED, ACTIVE, CLOSED) y fechas. Permite filtrar localmente por estado. El sistema debe manejar los estados de: cargando, lista vacía total, lista vacía por filtros y errores del servidor. Cada tarjeta debe incluir un botón de navegación hacia el detalle de tareas.<br>4. Restricciones: Usa Angular 17+ con componentes standalone y Signals.)* |
