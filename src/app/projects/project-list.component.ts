@@ -67,7 +67,11 @@ import { Project } from './project.model';
           </div>
         } @else {
           <div class="empty-state">
-            <p>No se encontraron proyectos con el estado seleccionado.</p>
+            @if (projects().length === 0) {
+              <p>No hay proyectos registrados actualmente.</p>
+            } @else {
+              <p>No se encontraron proyectos con el estado seleccionado.</p>
+            }
           </div>
         }
       }
