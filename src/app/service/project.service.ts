@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface ProjectRequest {
   id: null;
@@ -23,7 +24,7 @@ export interface ProjectResponse {
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8081/projects';
+  private apiUrl = `${environment.apiUrl}/projects`;
 
   createProject(project: ProjectRequest): Observable<ProjectResponse> {
     return this.http.post<ProjectResponse>(this.apiUrl, project);

@@ -7,10 +7,9 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { ProjectService, ProjectRequest } from '../service/project.service';
-import { Router } from '@angular/router';
 
-// Custom Validator sincrónico para las fechas
 function dateValidator(control: AbstractControl): ValidationErrors | null {
   const start = control.get('startDate')?.value;
   const end = control.get('endDate')?.value;
@@ -35,7 +34,7 @@ function dateValidator(control: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-project-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './project-create.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -44,9 +43,9 @@ export class ProjectCreateComponent {
   private projectService = inject(ProjectService);
   private router = inject(Router);
 
-  // Manejo de estado con Signals
   loading = signal(false);
   error = signal<string | null>(null);
+  success = signal<string | null>(null);
 
   projectForm = this.fb.group(
     {
@@ -67,6 +66,7 @@ export class ProjectCreateComponent {
 
     this.loading.set(true);
     this.error.set(null);
+    this.success.set(null);
 
     const formValue = this.projectForm.value;
     const request: ProjectRequest = {
@@ -81,10 +81,21 @@ export class ProjectCreateComponent {
     this.projectService.createProject(request).subscribe({
       next: () => {
         this.loading.set(false);
-        this.router.navigate(['/projects']);
+        this.error.set(null);
+        this.success.set('¡Proyecto creado con éxito! Redirigiendo...');
+
+        // Reiniciamos el formulario dejándolo limpio pero con el estado por defecto
+        this.projectForm.reset({ status: 'PLANNED' });
+
+        // Retrasamos la redirección 2 segundos para que se lea el cartel
+        setTimeout(() => {
+          this.router.navigate(['/proyectos']);
+        }, 2000);
       },
       error: (err) => {
         this.loading.set(false);
+        this.success.set(null);
+
         if (err.status === 409) {
           this.error.set('Recurso duplicado: El nombre del proyecto ya existe.');
         } else if (err.status === 400) {
