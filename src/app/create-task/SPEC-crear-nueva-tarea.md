@@ -86,4 +86,4 @@ entonces la respuesta incluye `finishedAt` con la fecha y hora actuales (seteado
 
 ## Prompts utilizados
 Agente IA: Claude (claude.ai)
-Prompt principal: ver archivo prompt-01.md adjunto.
+Prompt principal: ver archivo prompt-04.md adjunto.
