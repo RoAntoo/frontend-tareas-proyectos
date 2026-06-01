@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskService } from '../../service/task.service';
+import { TaskService, TaskStatus } from '../../service/task.service';
 
 @Component({
   selector: 'app-create-task',
@@ -42,7 +42,7 @@ export class CreateTaskComponent {
         title: this.form.value.title!,
         estimateHours: this.form.value.estimateHours!,
         assignee: this.form.value.assignee || null,
-        status: this.form.value.status as 'TODO' | 'IN_PROGRESS' | 'DONE',
+        status: this.form.value.status as TaskStatus,
       })
       .subscribe({
         next: () => {

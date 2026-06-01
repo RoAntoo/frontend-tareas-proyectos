@@ -84,6 +84,11 @@ Dado que el usuario crea una tarea con status `DONE`,
 cuando el backend responde 201,
 entonces la respuesta incluye `finishedAt` con la fecha y hora actuales (seteado por el backend).
 
+**Escenario 6 — Error inesperado del servidor:**
+Dado que el usuario completa el formulario correctamente,
+cuando el backend responde con un error inesperado (ej. 500),
+entonces se muestra el mensaje "Error al crear la tarea. Revisá los datos e intentá de nuevo."
+
 ## Prompts utilizados
 Agente IA: Claude (claude.ai)
 Prompt principal: ver archivo prompt-04.md adjunto.
