@@ -8,7 +8,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ProjectService, ProjectRequest } from '../service/project.service';
+import { ProjectService, ProjectRequest, ProjectStatus } from '../../service/project.service';
 
 function dateValidator(control: AbstractControl): ValidationErrors | null {
   const start = control.get('startDate')?.value;
@@ -38,6 +38,7 @@ function dateValidator(control: AbstractControl): ValidationErrors | null {
   templateUrl: './project-create.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class ProjectCreateComponent {
   private fb = inject(FormBuilder);
   private projectService = inject(ProjectService);
@@ -74,7 +75,7 @@ export class ProjectCreateComponent {
       name: formValue.name!,
       startDate: formValue.startDate!,
       endDate: formValue.endDate!,
-      status: formValue.status!,
+      status: formValue.status! as ProjectStatus,
       description: formValue.description || undefined,
     };
 

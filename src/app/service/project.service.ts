@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+export type ProjectStatus = 'PLANNED' | 'ACTIVE' | 'CLOSED';
+
 export interface ProjectRequest {
   id: null;
   name: string;
   startDate: string;
   endDate: string;
-  status: string;
+  status: ProjectStatus;
   description?: string;
 }
 
@@ -17,7 +19,7 @@ export interface ProjectResponse {
   name: string;
   startDate: string;
   endDate: string;
-  status: string;
+  status: ProjectStatus;
   description?: string;
 }
 
