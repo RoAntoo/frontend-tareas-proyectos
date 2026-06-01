@@ -1,0 +1,79 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Crear Nuevo Proyecto</h4>
+        </div>
+        <div class="card-body">
+
+          <div *ngIf="error()" class="alert alert-danger" role="alert">
+            {{ error() }}
+          </div>
+
+          <div *ngIf="success()" class="alert alert-success" role="alert">
+            {{ success() }}
+          </div>
+
+          <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nombre del Proyecto</label>
+              <input type="text" class="form-control" formControlName="name" placeholder="Ej: Rediseño del sitio web" />
+              <div class="text-danger small mt-1" *ngIf="projectForm.get('name')?.touched && projectForm.get('name')?.hasError('required')">
+                El nombre es un campo obligatorio.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Fecha de Inicio</label>
+                <input type="date" class="form-control" formControlName="startDate" />
+                <div class="text-danger small mt-1" *ngIf="projectForm.get('startDate')?.touched && projectForm.get('startDate')?.hasError('required')">
+                  Requerido.
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Fecha de Fin</label>
+                <input type="date" class="form-control" formControlName="endDate" />
+                <div class="text-danger small mt-1" *ngIf="projectForm.get('endDate')?.touched && projectForm.get('endDate')?.hasError('required')">
+                  Requerido.
+                </div>
+                <div class="text-danger small mt-1" *ngIf="projectForm.hasError('endBeforeStart') && (projectForm.get('endDate')?.touched || projectForm.get('startDate')?.touched)">
+                  La fecha de fin no puede ser anterior a la de inicio.
+                </div>
+                <div class="text-danger small mt-1" *ngIf="projectForm.hasError('endBeforeToday') && projectForm.get('endDate')?.touched">
+                  Al crear un proyecto, la fecha de fin no puede ser anterior a hoy.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Estado</label>
+              <select class="form-select" formControlName="status">
+                <option value="PLANNED">Planeado</option>
+                <option value="ACTIVE">Activo</option>
+                <option value="CLOSED">Cerrado</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Descripción (Opcional)</label>
+              <textarea class="form-control" rows="3" formControlName="description" placeholder="Agregá detalles adicionales del proyecto..."></textarea>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+              <button type="button" class="btn btn-outline-secondary" routerLink="/proyectos">Cancelar</button>
+              <button type="submit" class="btn btn-primary" [disabled]="projectForm.invalid || loading()">
+                <span *ngIf="loading()" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                Guardar Proyecto
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
