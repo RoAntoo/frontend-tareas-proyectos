@@ -55,8 +55,8 @@ El usuario puede editar título, horas estimadas y asignado de una tarea. El for
 ### Restricciones técnicas
 
 - Componente standalone con `ChangeDetectionStrategy.OnPush`
-- Ubicar el componente en `src/app/tasks/edit-task/`
-- El servicio debe llamarse `TaskService` y vivir en `src/app/services/task.service.ts`
+- Ubicar el componente en `src/app/features/update-task/`
+- El servicio debe llamarse `TaskService` y vivir en `src/app/service/task.service.ts`
   - Si el servicio ya existe, solo agregar los métodos `getTask(projectId, taskId)` y `updateTask(projectId, taskId, dto)`
 - Ruta: `/projects/:projectId/tasks/:taskId/edit`, leer params con `ActivatedRoute`
 - Usar signals locales para `isLoading`, `isSaving` y `errorMessage`
@@ -65,7 +65,7 @@ El usuario puede editar título, horas estimadas y asignado de una tarea. El for
 
 ### Archivos a generar
 
-1. `src/app/tasks/edit-task/edit-task.component.ts`
-2. `src/app/tasks/edit-task/edit-task.component.html`
-3. Métodos nuevos en `src/app/services/task.service.ts` (mostrar solo los métodos, no reescribir el servicio completo)
+1. `src/app/features/update-task/update-task.component.ts`
+2. `src/app/features/update-task/update-task.component.html`
+3. Métodos nuevos en `src/app/service/task.service.ts`
 4. Fragmento de routing para registrar la nueva ruta

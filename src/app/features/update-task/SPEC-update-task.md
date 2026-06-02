@@ -44,9 +44,9 @@ Response 409: violación de regla de negocio
 
 ## Lineamientos técnicos
 
-- **Componente:** standalone, `ChangeDetectionStrategy.OnPush`, ubicado en `src/app/tasks/edit-task/`.
+- **Componente:** standalone, `ChangeDetectionStrategy.OnPush`, ubicado en `src/app/features/update-task/`.
 - **Formulario:** Reactive Forms con validadores síncronos (`Validators.required`, `Validators.min(1)`).
-- **Servicio:** `TaskService` en `src/app/services/task.service.ts` — métodos `getTask(projectId, taskId)` y `updateTask(projectId, taskId, dto)`.
+- **Servicio:** `task.service` en `src/app/service/task.service.ts` — métodos `getTask(projectId, taskId)` y `updateTask(projectId, taskId, dto)`.
 - **Routing:** ruta `/projects/:projectId/tasks/:taskId/edit`. Los params se leen con `ActivatedRoute`.
 - **Estado de carga:** signals locales para `isLoading`, `isSaving` y `errorMessage`.
 - **Estilos:** Bootstrap 5 (o la librería acordada con los docentes a nivel proyecto).
@@ -90,5 +90,5 @@ Response 409: violación de regla de negocio
 ---
 
 ## Prompts utilizados
-Agente IA: Claude (claude.ai)
-Prompt principal: ver archivo prompt-06.md adjunto.
+- Agente IA: Claude (claude.ai)
+- Prompt principal: ver archivo prompt-06.md adjunto.
