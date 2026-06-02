@@ -94,5 +94,5 @@ entonces se muestra una alerta "Error al guardar. Intentá de nuevo." sin perder
 del formulario.
 
 ## Prompts utilizados
-Agente IA: Claude (claude.ai)
-Prompt principal: ver archivo prompt-05.md adjunto.
+- Agente IA: Claude (claude.ai)
+- Prompt principal: ver archivo prompt-05.md adjunto.

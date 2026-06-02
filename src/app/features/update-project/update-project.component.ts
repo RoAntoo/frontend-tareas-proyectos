@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormBuilder,
@@ -8,25 +8,9 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../environments/environment';
-
-interface ProjectUpdateRequest {
-  name: string;
-  startDate: string;
-  endDate: string;
-  description?: string;
-}
-
-interface ProjectResponse {
-  id: number;
-  name: string;
-  startDate: string;
-  endDate: string;
-  status: string;
-  description?: string;
-}
+import { ProjectService } from '../../service/project.service';
+import { ProjectUpdateRequest, ProjectResponse } from '../../core/models/project.models';
 
 function dateRangeValidator(control: AbstractControl): ValidationErrors | null {
   const start = control.get('startDate')?.value;
@@ -45,6 +29,11 @@ function dateRangeValidator(control: AbstractControl): ValidationErrors | null {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UpdateProjectComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private projectService = inject(ProjectService);
+
   form!: FormGroup;
   projectId!: number;
 
@@ -52,15 +41,6 @@ export class UpdateProjectComponent implements OnInit {
   loadError = signal<string | null>(null);
   saveError = signal<string | null>(null);
   nameConflict = signal(false);
-
-  private readonly API = environment.apiUrl;
-
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient,
-  ) {}
 
   ngOnInit(): void {
     this.projectId = Number(this.route.snapshot.paramMap.get('id'));
@@ -82,7 +62,7 @@ export class UpdateProjectComponent implements OnInit {
     this.loading.set(true);
     this.loadError.set(null);
 
-    this.http.get<ProjectResponse>(`${this.API}/projects/${this.projectId}`).subscribe({
+    this.projectService.getProjectById(this.projectId).subscribe({
       next: (project) => {
         this.form.patchValue({
           name: project.name,
@@ -104,7 +84,10 @@ export class UpdateProjectComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.saveError.set(null);
     this.nameConflict.set(false);
@@ -112,7 +95,7 @@ export class UpdateProjectComponent implements OnInit {
 
     const body: ProjectUpdateRequest = this.form.value;
 
-    this.http.put<ProjectResponse>(`${this.API}/projects/${this.projectId}`, body).subscribe({
+    this.projectService.updateProject(this.projectId, body).subscribe({
       next: () => {
         this.loading.set(false);
         this.router.navigate(['/projects']);
