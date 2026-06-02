@@ -38,7 +38,7 @@ Errores posibles:
 - Reactive Forms con validaciones en el frontend para title (required) y estimateHours (required, min 1)
 - Estilos con Bootstrap 5
 - El servicio debe llamarse TaskService y vivir en src/app/services/task.service.ts
-- El componente vive en src/app/tasks/create-task/
+- El componente vive en src/app/features/create-task/
 - El projectId se obtiene desde los parámetros de la ruta con ActivatedRoute
 - Manejar tres estados en el template: cargando (botón deshabilitado), error (mensaje del backend), éxito (redirigir a la vista del proyecto o mostrar confirmación)
 - Mostrar errores de validación inline en cada campo
