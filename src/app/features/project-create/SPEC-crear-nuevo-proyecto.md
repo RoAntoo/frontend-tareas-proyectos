@@ -36,7 +36,7 @@ Standalone components, Angular 17, Reactive Forms (para manejar las validaciones
 5. Dado que el usuario intenta enviar el formulario dejando campos obligatorios vacíos, cuando los campos son tocados, entonces se visualizan los mensajes de error inline correspondientes y el botón de enviar se mantiene deshabilitado.
 6. Dado que el usuario envía el formulario, cuando el backend responde con un error inesperado (ej. 500), entonces se muestra un mensaje de error genérico indicando que ocurrió un error inesperado al intentar crear el proyecto.
 
-6. **Prompts utilizados:**
-Agente IA: Gemini (gemini.ai)
-Prompt principal: ver archivo prompt-03.md adjunto.
+**Prompts utilizados:**
+- Agente IA: Gemini (gemini.ai)
+- Prompt principal: ver archivo prompt-03.md adjunto.
 
