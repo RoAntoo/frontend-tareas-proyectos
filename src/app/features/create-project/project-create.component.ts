@@ -32,7 +32,7 @@ function dateValidator(control: AbstractControl): ValidationErrors | null {
 }
 
 @Component({
-  selector: 'app-project-create',
+  selector: 'app-create-project',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './project-create.component.html',
