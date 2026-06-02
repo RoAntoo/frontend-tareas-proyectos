@@ -1,0 +1,102 @@
+<div class="container mt-4">
+  <h2>Editar Proyecto</h2>
+
+  <!-- Error al cargar -->
+  @if (loadError()) {
+    <div class="alert alert-danger">
+      {{ loadError() }}
+      <a routerLink="/projects" class="alert-link ms-2">Volver al listado</a>
+    </div>
+  }
+
+  <!-- Cargando -->
+  @if (loading() && !loadError()) {
+    <div class="text-center my-4">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+  }
+
+  <!-- Formulario -->
+  @if (!loading() && !loadError()) {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <!-- Nombre -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre *</label>
+        <input
+          id="name"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched || nameConflict()"
+          formControlName="name"
+        />
+        @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+          <div class="invalid-feedback">El nombre es obligatorio.</div>
+        }
+        @if (nameConflict()) {
+          <div class="invalid-feedback d-block">Ya existe un proyecto con ese nombre.</div>
+        }
+      </div>
+
+      <!-- Fecha de inicio -->
+      <div class="mb-3">
+        <label for="startDate" class="form-label">Fecha de inicio *</label>
+        <input
+          id="startDate"
+          type="date"
+          class="form-control"
+          [class.is-invalid]="form.get('startDate')?.invalid && form.get('startDate')?.touched"
+          formControlName="startDate"
+        />
+        @if (form.get('startDate')?.hasError('required') && form.get('startDate')?.touched) {
+          <div class="invalid-feedback">La fecha de inicio es obligatoria.</div>
+        }
+      </div>
+
+      <!-- Fecha de fin -->
+      <div class="mb-3">
+        <label for="endDate" class="form-label">Fecha de fin *</label>
+        <input
+          id="endDate"
+          type="date"
+          class="form-control"
+          [class.is-invalid]="form.get('endDate')?.invalid && form.get('endDate')?.touched || form.hasError('dateRange')"
+          formControlName="endDate"
+        />
+        @if (form.get('endDate')?.hasError('required') && form.get('endDate')?.touched) {
+          <div class="invalid-feedback">La fecha de fin es obligatoria.</div>
+        }
+        @if (form.hasError('dateRange') && form.get('endDate')?.touched) {
+          <div class="invalid-feedback d-block">La fecha de fin debe ser mayor o igual a la fecha de inicio.</div>
+        }
+      </div>
+
+      <!-- Descripción -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Descripción</label>
+        <textarea
+          id="description"
+          class="form-control"
+          rows="3"
+          formControlName="description"
+        ></textarea>
+      </div>
+
+      <!-- Error al guardar -->
+      @if (saveError()) {
+        <div class="alert alert-danger">{{ saveError() }}</div>
+      }
+
+      <!-- Botones -->
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading()">
+          Guardar
+        </button>
+        <a routerLink="/projects" class="btn btn-secondary">Cancelar</a>
+      </div>
+
+    </form>
+  }
+</div>
