@@ -1,6 +1,6 @@
 # SPEC.md — Crear tarea dentro de un proyecto
 
-## Nombre de la feature
+## Objetivo
 Crear tarea dentro de un proyecto
 
 ## Descripción general
@@ -90,5 +90,5 @@ cuando el backend responde con un error inesperado (ej. 500),
 entonces se muestra el mensaje "Error al crear la tarea. Revisá los datos e intentá de nuevo."
 
 ## Prompts utilizados
-Agente IA: Claude (claude.ai)
-Prompt principal: ver archivo prompt-04.md adjunto.
+- Agente IA: Claude (claude.ai)
+- Prompt principal: ver archivo prompt-04.md adjunto.
