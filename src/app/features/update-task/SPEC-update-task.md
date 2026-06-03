@@ -72,17 +72,22 @@ Response 409: violación de regla de negocio
 > cuando intenta hacer clic en "Guardar",
 > entonces el botón está deshabilitado (o el form muestra errores inline) y no se realiza ningún request al backend.
 
-**CA-4 — Error de servidor (400 / 409):**
-> Dado que el backend responde con 400 o 409,
-> cuando el usuario intenta guardar,
-> entonces se muestra el mensaje de error recibido en el servidor sin redirigir ni limpiar el formulario.
+**CA-4 — Error de validación (400):**
+> Dado que el usuario envía datos que no pasan la validación del backend (ej: `estimateHours` con valor negativo que evadió el control del form),
+> cuando el backend responde con 400,
+> entonces se muestra el mensaje de error indicando qué campo es inválido, sin redirigir ni limpiar el formulario.
 
-**CA-5 — Tarea no encontrada:**
+**CA-5 — Violación de regla de negocio (409):**
+> Dado que el proyecto al que pertenece la tarea está en estado `CLOSED`,
+> cuando el usuario intenta guardar,
+> entonces el backend responde con 409 y se muestra un mensaje explicando la restricción (ej: "No se puede modificar una tarea de un proyecto cerrado"), sin redirigir ni limpiar el formulario.
+
+**CA-6 — Tarea no encontrada:**
 > Dado que el `taskId` o `projectId` no existe en el backend,
 > cuando el componente intenta pre-cargar los datos,
 > entonces se muestra un mensaje "Tarea no encontrada" y un link para volver al listado de proyectos.
 
-**CA-6 — Estado de guardado:**
+**CA-7 — Estado de guardado:**
 > Dado que el usuario hace clic en "Guardar",
 > cuando el request está en curso,
 > entonces el botón muestra un indicador de carga y queda deshabilitado hasta recibir respuesta.
