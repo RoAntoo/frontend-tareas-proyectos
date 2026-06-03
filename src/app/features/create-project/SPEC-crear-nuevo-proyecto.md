@@ -34,7 +34,7 @@ Standalone components, Angular 17, Reactive Forms (para manejar las validaciones
 3. Dado que el usuario ingresa un nombre de proyecto que ya existe, cuando envía el formulario, entonces el backend devuelve un error 409 y se muestra un mensaje de "Recurso duplicado" en la pantalla.
 4. Dado que el usuario envía el formulario con datos que el backend rechaza como inválidos, cuando el backend devuelve un error 400, entonces se muestra el mensaje de alerta global: "Error de validación: Revisa los datos ingresados."
 5. Dado que el usuario intenta enviar el formulario dejando campos obligatorios vacíos, cuando los campos son tocados, entonces se visualizan los mensajes de error inline correspondientes y el botón de enviar se mantiene deshabilitado.
-6. Dado que el usuario envía el formulario, cuando el backend responde con un error inesperado (ej. 500), entonces se muestra un mensaje de error genérico indicando que ocurrió un error inesperado al intentar crear el proyecto.
+6. Dado que el usuario completa y envía el formulario correctamente, cuando el backend responde con un error inesperado (HTTP 500 u otro código no contemplado), entonces se muestra un mensaje de alerta global en pantalla con el texto "Ocurrió un error inesperado al intentar crear el proyecto." y el formulario permanece con los datos ingresados (no se limpia ni redirige).
 
 **Prompts utilizados:**
 - Agente IA: Gemini (gemini.ai)

@@ -38,7 +38,6 @@ function dateValidator(control: AbstractControl): ValidationErrors | null {
   templateUrl: './project-create.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class ProjectCreateComponent {
   private fb = inject(FormBuilder);
   private projectService = inject(ProjectService);
@@ -50,11 +49,14 @@ export class ProjectCreateComponent {
 
   projectForm = this.fb.group(
     {
-      name: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      status: ['PLANNED', Validators.required],
-      description: [''],
+      name: this.fb.control('', { validators: Validators.required, nonNullable: true }),
+      startDate: this.fb.control('', { validators: Validators.required, nonNullable: true }),
+      endDate: this.fb.control('', { validators: Validators.required, nonNullable: true }),
+      status: this.fb.control<ProjectStatus>('PLANNED', {
+        validators: Validators.required,
+        nonNullable: true,
+      }),
+      description: this.fb.control(''),
     },
     { validators: dateValidator },
   );
@@ -69,13 +71,13 @@ export class ProjectCreateComponent {
     this.error.set(null);
     this.success.set(null);
 
-    const formValue = this.projectForm.value;
+    const formValue = this.projectForm.getRawValue();
     const request: ProjectRequest = {
       id: null,
-      name: formValue.name!,
-      startDate: formValue.startDate!,
-      endDate: formValue.endDate!,
-      status: formValue.status! as ProjectStatus,
+      name: formValue.name,
+      startDate: formValue.startDate,
+      endDate: formValue.endDate,
+      status: formValue.status,
       description: formValue.description || undefined,
     };
 
@@ -85,10 +87,8 @@ export class ProjectCreateComponent {
         this.error.set(null);
         this.success.set('¡Proyecto creado con éxito! Redirigiendo...');
 
-        // Reiniciamos el formulario dejándolo limpio pero con el estado por defecto
         this.projectForm.reset({ status: 'PLANNED' });
 
-        // Retrasamos la redirección 2 segundos para que se lea el cartel
         setTimeout(() => {
           this.router.navigate(['/proyectos']);
         }, 2000);
