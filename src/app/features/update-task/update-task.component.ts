@@ -6,13 +6,13 @@ import { TaskService, TaskResponse } from '../../service/task.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-task',
+  selector: 'app-update-task',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, DatePipe],
   templateUrl: './update-task.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditTaskComponent implements OnInit {
+export class UpdateTaskComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private fb = inject(FormBuilder);
