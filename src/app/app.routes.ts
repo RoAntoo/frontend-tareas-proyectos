@@ -3,14 +3,14 @@ import { CreateTaskComponent } from './features/create-task/create-task.componen
 import { ProjectCreateComponent } from './features/create-project/project-create.component';
 import { ProjectListComponent } from './features/get-projects/project-list.component';
 import { TaskListComponent } from './features/get-tasks/task-list.component';
-
+ 
 export const routes: Routes = [
   {
-    path: ``,
+    path: '',
     component: ProjectListComponent,
   },
   {
-    path: `project/new`,
+    path: 'project/new',
     component: ProjectCreateComponent,
   },
   {
@@ -18,12 +18,16 @@ export const routes: Routes = [
     component: CreateTaskComponent,
   },
   {
-    path: `project/:id/task`,
+    path: 'project/:id/task',
     component: TaskListComponent,
   },
   {
-    path: `**`,
-    redirectTo: ``,
-  }
+    path: 'projects/:projectId/tasks/:taskId/edit',
+    loadComponent: () =>
+      import('./features/update-task/update-task.component').then((m) => m.UpdateTaskComponent),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
-
