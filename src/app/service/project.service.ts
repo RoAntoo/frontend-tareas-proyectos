@@ -4,12 +4,25 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ProjectResponse, ProjectUpdateRequest } from '../core/models/project.models';
 
-@Injectable({
-  providedIn: 'root',
-})
+export type ProjectStatus = 'PLANNED' | 'ACTIVE' | 'CLOSED';
+
+export interface ProjectRequest {
+  id: null;
+  name: string;
+  startDate: string;
+  endDate: string;
+  status: ProjectStatus;
+  description?: string;
+}
+
+@Injectable({ providedIn: 'root' })
 export class ProjectService {
   private http = inject(HttpClient);
   private readonly API = environment.apiUrl;
+
+  createProject(project: ProjectRequest): Observable<ProjectResponse> {
+    return this.http.post<ProjectResponse>(`${this.API}/projects`, project);
+  }
 
   getProjectById(id: number): Observable<ProjectResponse> {
     return this.http.get<ProjectResponse>(`${this.API}/projects/${id}`);
