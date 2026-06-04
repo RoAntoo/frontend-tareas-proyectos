@@ -6,10 +6,33 @@ import { TaskListComponent } from './features/get-tasks/task-list.component';
 import { UpdateProjectComponent } from './features/update-project/update-project.component';
 
 export const routes: Routes = [
-  { path: '', component: ProjectListComponent },
-  { path: 'project/new', component: ProjectCreateComponent },
-  { path: 'projects/:projectId/tasks/new', component: CreateTaskComponent },
-  { path: 'project/:id/task', component: TaskListComponent },
-  { path: 'projects/:id/edit', component: UpdateProjectComponent },
-  { path: '**', redirectTo: '' },
+  {
+    path: '',
+    component: ProjectListComponent,
+  },
+  {
+    path: 'project/new',
+    component: ProjectCreateComponent,
+  },
+  {
+    path: 'projects/:projectId/tasks/new',
+    component: CreateTaskComponent,
+  },
+  {
+    path: 'project/:id/task',
+    component: TaskListComponent,
+  },
+  {
+    path: 'projects/:id/edit',
+    component: UpdateProjectComponent,
+  },
+  {
+    path: 'projects/:projectId/tasks/:taskId/edit',
+    loadComponent: () =>
+      import('./features/update-task/update-task.component').then((m) => m.UpdateTaskComponent),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
