@@ -57,3 +57,13 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## 🎨 Lineamientos de Diseño Visual del Proyecto (Sistema de Colores Pasteles)
+
+Para garantizar la coherencia estética en toda la aplicación y alejar el diseño del estándar genérico de Bootstrap 5, se define la siguiente paleta de colores global:
+
+- **Fondo de la Aplicación (Body):** Blanco roto/hueso (`#FAFAFA`) para reducir la fatiga visual.
+- **Color Primario (Navbar y Éxito):** Verde Menta Pastel (`#E8F5E9` como fondo, con acentos en `#A5D6A7`). Se mapea para reemplazar las acciones principales y cabeceras de éxito (`bg-success`, `btn-success`).
+- **Color Secundario (Acentos y Destacados):** Rosa Pastel (`#FCE4EC` como fondo, con acentos en `#F8BBD0`). Se utiliza en el contenedor del Home, alertas visuales y estados de tareas/proyectos específicos (`PLANNED`).
+- **Textos y Tipografía:** Gris oscuro (`#2C3E50`) aplicado a los títulos y textos para asegurar un contraste accesible sobre los fondos claros.
+- **Estructura:** Uso estricto de tarjetas redondeadas (`border-radius: 12px;`) con sombras muy sutiles (`shadow-sm`) para un aspecto moderno y limpio.

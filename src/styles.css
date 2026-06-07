@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+
+body {
+  background-color: #FAFAFA !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav-link {
+  color: #2C3E50 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: #C8E6C9 !important;
+}
+
+
+.active-link {
+  background-color: #A5D6A7 !important;
+  color: #1b2631 !important;
+}
