@@ -9,23 +9,23 @@ import { UpdateProjectComponent } from './features/update-project/update-project
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent, // El Home toma la pantalla inicial
+    component: HomeComponent,
   },
   {
     path: 'projects',
-    component: ProjectListComponent, // El listado se muda a su ruta correspondiente
+    component: ProjectListComponent,
   },
   {
     path: 'projects/new',
-    component: ProjectCreateComponent, // Normalizado a plural
+    component: ProjectCreateComponent,
   },
   {
     path: 'projects/:projectId/edit',
-    component: UpdateProjectComponent, // Unificamos el parámetro a :projectId
+    component: UpdateProjectComponent,
   },
   {
     path: 'projects/:projectId/tasks',
-    component: TaskListComponent, // Normalizado a plural y parámetro unificado
+    component: TaskListComponent,
   },
   {
     path: 'projects/:projectId/tasks/new',
