@@ -1,10 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/home/home.component'; // <-- Sumamos el Home
-import { ProjectListComponent } from './features/get-projects/project-list.component';
-import { ProjectCreateComponent } from './features/create-project/project-create.component';
-import { CreateTaskComponent } from './features/create-task/create-task.component';
-import { TaskListComponent } from './features/get-tasks/task-list.component';
-import { UpdateProjectComponent } from './features/update-project/update-project.component';
+import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
   {
@@ -13,23 +8,28 @@ export const routes: Routes = [
   },
   {
     path: 'projects',
-    component: ProjectListComponent,
+    loadComponent: () =>
+      import('./features/get-projects/project-list.component').then((m) => m.ProjectListComponent),
   },
   {
     path: 'projects/new',
-    component: ProjectCreateComponent,
+    loadComponent: () =>
+      import('./features/create-project/project-create.component').then((m) => m.ProjectCreateComponent),
   },
   {
     path: 'projects/:projectId/edit',
-    component: UpdateProjectComponent,
+    loadComponent: () =>
+      import('./features/update-project/update-project.component').then((m) => m.UpdateProjectComponent),
   },
   {
     path: 'projects/:projectId/tasks',
-    component: TaskListComponent,
+    loadComponent: () =>
+      import('./features/get-tasks/task-list.component').then((m) => m.TaskListComponent),
   },
   {
     path: 'projects/:projectId/tasks/new',
-    component: CreateTaskComponent,
+    loadComponent: () =>
+      import('./features/create-task/create-task.component').then((m) => m.CreateTaskComponent),
   },
   {
     path: 'projects/:projectId/tasks/:taskId/edit',

@@ -16,7 +16,7 @@ No aplica directamente para la renderización estática del Home, pero la Navbar
 - La sección de bienvenida ("Hero") debe centralizar las acciones principales del usuario basándose en los módulos disponibles.
 
 **Lineamientos técnicos:**
-Standalone components, Angular 17, RouterModule (encargado de la navegación SPA mediante `routerLink` y `<router-outlet>`), ChangeDetectionStrategy.OnPush para optimizar el rendimiento. Se hereda el uso de Bootstrap 5 para el esqueleto estructural, pero se anula el estilo clásico inyectando una paleta de colores pasteles personalizada de forma global.
+Standalone components, Angular 17, RouterModule (encargado de la navegación SPA mediante `routerLink` y `<router-outlet>`), ChangeDetectionStrategy.OnPush para optimizar el rendimiento. Se hereda el uso de Bootstrap 5 (integrado mediante CDN de jsDelivr en `index.html` para agilidad y evitar duplicación local en bundle) para el esqueleto estructural, pero se anula el estilo clásico inyectando una paleta de colores pasteles personalizada de forma global.
 
 **Lineamientos de diseño visual:**
 - **Paleta de colores pasteles:** - Verde Menta Pastel (`#E8F5E9` / `#A5D6A7` para estados activos): Aplicado como fondo principal de la Navbar superior y botones de éxito.
@@ -30,7 +30,6 @@ Standalone components, Angular 17, RouterModule (encargado de la navegación SPA
 1. Dado que el usuario se encuentra en cualquier pantalla de la aplicación, cuando visualiza el tope de la página, entonces la Navbar pastel se mantiene fija en su posición sin desaparecer ni recargarse al hacer scroll.
 2. Dado que el usuario hace clic en el enlace "Crear Proyecto" o "Ver Proyectos" de la Navbar, cuando el Router de Angular intercepta la acción, entonces la pantalla cambia instantáneamente al componente correspondiente de forma fluida (SPA) sin pestañeo blanco ni recarga tradicional del navegador.
 3. Dado que el usuario escribe manualmente una ruta que no existe en la barra de direcciones (ej: `/cualquier-cosa`), cuando presiona Enter, entonces el sistema intercepta el error de ruteo y lo redirige automáticamente a la página de inicio (Home).
-4. Dado que el backend o los servicios compartidos de la aplicación experimentan una falla crítica inesperada (error 500) al inicializar el contexto global en el Home, cuando el componente detecta el fallo, entonces se muestra un cuadro de alerta superior pastel con un mensaje genérico indicando que el servicio no se encuentra disponible temporalmente.
 
 **Prompts utilizados:**
 - Agente IA: Gemini (gemini.ai)

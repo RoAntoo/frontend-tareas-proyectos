@@ -49,7 +49,7 @@ Response 409: violación de regla de negocio
 - **Servicio:** `task.service` en `src/app/service/task.service.ts` — métodos `getTask(projectId, taskId)` y `updateTask(projectId, taskId, dto)`.
 - **Routing:** ruta `/projects/:projectId/tasks/:taskId/edit`. Los params se leen con `ActivatedRoute`.
 - **Estado de carga:** signals locales para `isLoading`, `isSaving` y `errorMessage`.
-- **Estilos:** Bootstrap 5 (o la librería acordada con los docentes a nivel proyecto).
+- **Estilos:** Bootstrap 5 (cargado de forma global vía CDN de jsDelivr en `index.html` para evitar dependencias locales npm y no sobrecargar el bundle final).
 - **Errores HTTP:** el interceptor JWT ya existente maneja el token; el componente solo maneja los errores de respuesta (400, 404, 409) mostrando el mensaje del backend.
 - **Navegación post-guardado:** redirigir a `/projects/:projectId/tasks` (listado de tareas del proyecto) al completar exitosamente.
 
