@@ -90,7 +90,7 @@ export class ProjectCreateComponent {
         this.projectForm.reset({ status: 'PLANNED' });
 
         setTimeout(() => {
-          this.router.navigate(['/proyectos']);
+          this.router.navigate(['/projects']);
         }, 2000);
       },
       error: (err) => {

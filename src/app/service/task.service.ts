@@ -38,6 +38,10 @@ export class TaskService {
     return this.http.post<TaskResponse>(`${this.baseUrl}/projects/${projectId}/tasks`, task);
   }
 
+  getTasksByProjectId(projectId: number | string): Observable<TaskResponse[]> {
+    return this.http.get<TaskResponse[]>(`${this.baseUrl}/projects/${projectId}/tasks`);
+  }
+
   getTask(projectId: number, taskId: number): Observable<TaskResponse> {
     return this.http.get<TaskResponse>(`${this.baseUrl}/projects/${projectId}/tasks/${taskId}`);
   }

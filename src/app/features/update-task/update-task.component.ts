@@ -3,12 +3,11 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskService, TaskResponse } from '../../service/task.service';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-update-task',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, DatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './update-task.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -81,7 +80,7 @@ export class UpdateTaskComponent implements OnInit {
       .subscribe({
         next: () => {
           this.isSaving.set(false);
-          this.router.navigate(['/projects', this.projectId]);
+          this.router.navigate(['/projects', this.projectId, 'tasks']);
         },
         error: (err) => {
           const msg = err.error?.message || 'Ocurrió un error al guardar. Intentá de nuevo.';

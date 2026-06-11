@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LowerCasePipe } from '@angular/common';
-import { ProjectService } from './project.service';
-import { Project } from './project.model';
+import { ProjectService } from '../../service/project.service';
+import { ProjectResponse } from '../../core/models/project.models';
 
 @Component({
   selector: 'app-project-list',
@@ -58,9 +58,12 @@ import { Project } from './project.model';
                   <p><strong>Fin:</strong> {{ project.endDate }}</p>
                 </div>
                 <div class="card-actions">
-                  <button class="btn-primary" [routerLink]="['/proyectos', project.id, 'tareas']">
+                  <a class="btn-primary" [routerLink]="['/projects', project.id, 'tasks']">
                     Ver Tareas
-                  </button>
+                  </a>
+                  <a class="btn-secondary" [routerLink]="['/projects', project.id, 'edit']">
+                    Editar
+                  </a>
                 </div>
               </div>
             }
@@ -186,20 +189,41 @@ import { Project } from './project.model';
         padding: 15px 20px;
         background-color: #f8f9fa;
         border-top: 1px solid #eee;
+        display: flex;
+        gap: 10px;
       }
       .btn-primary {
-        width: 100%;
+        flex: 1;
         padding: 10px;
-        background-color: #007bff;
-        color: white;
+        background-color: #a5d6a7;
+        color: #2c3e50;
         border: none;
         border-radius: 6px;
         cursor: pointer;
         font-weight: bold;
         transition: background-color 0.2s;
+        text-align: center;
+        text-decoration: none;
       }
       .btn-primary:hover {
-        background-color: #0056b3;
+        background-color: #81c784;
+        color: #2c3e50;
+      }
+      .btn-secondary {
+        padding: 10px 15px;
+        background-color: #fce4ec;
+        color: #2c3e50;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.2s;
+        text-align: center;
+        text-decoration: none;
+      }
+      .btn-secondary:hover {
+        background-color: #f8bbd0;
+        color: #2c3e50;
       }
     `,
   ],
@@ -208,7 +232,7 @@ export class ProjectListComponent implements OnInit {
   private projectService = inject(ProjectService);
 
   // Signals
-  projects = signal<Project[]>([]);
+  projects = signal<ProjectResponse[]>([]);
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
   filterStatus = signal<string>('TODOS');
