@@ -9,6 +9,35 @@ import { TaskService, TaskStatus } from '../../service/task.service';
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './create-task.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [
+    `
+      .btn-primary {
+        background-color: #A5D6A7 !important;
+        border: none !important;
+        color: #2C3E50 !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        transition: background-color 0.2s ease-in-out !important;
+        padding: 10px 20px !important;
+      }
+      .btn-primary:hover:not(:disabled) {
+        background-color: #81C784 !important;
+        color: #2C3E50 !important;
+      }
+      .btn-outline-secondary {
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        border-color: #ccc !important;
+        color: #555 !important;
+        padding: 10px 20px !important;
+      }
+      .btn-outline-secondary:hover {
+        background-color: #fce4ec !important;
+        color: #2C3E50 !important;
+        border-color: #f8bbd0 !important;
+      }
+    `
+  ]
 })
 export class CreateTaskComponent implements OnInit {
   private fb = inject(FormBuilder);
