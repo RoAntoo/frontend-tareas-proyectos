@@ -51,7 +51,7 @@ Códigos de error:
 ## Lineamientos técnicos
 - Componente standalone con `ChangeDetectionStrategy.OnPush`.
 - Formulario con **Reactive Forms** (validaciones en `title` y `estimateHours` requeridas en el frontend).
-- Estilos con **Bootstrap 5**.
+- Estilos con **Bootstrap 5** (integrado de forma global en `index.html` vía CDN de jsDelivr para evitar dependencias locales npm y sobrecarga del bundle).
 - Comunicación vía `HttpClient` usando el servicio `TaskService` ubicado en `src/app/service/task.service.ts`.
 - El `projectId` se obtiene desde los parámetros de la ruta (`ActivatedRoute`).
 - Manejo de tres estados en el template: cargando (submit en progreso), error (mostrar mensaje del backend), éxito (limpiar formulario o redirigir).

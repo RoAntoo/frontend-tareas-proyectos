@@ -20,7 +20,7 @@ POST /projects
 - Todos los campos requeridos deben estar presentes.
 
 **Lineamientos técnicos:**
-Standalone components, Angular 17, Reactive Forms (para manejar las validaciones de fechas), HttpClient con interceptor JWT para la autenticación, manejo de estado de carga/error con Signals.
+Standalone components, Angular 17, Reactive Forms (para manejar las validaciones de fechas), HttpClient con interceptor JWT para la autenticación, manejo de estado de carga/error con Signals. Estilos de maquetado e interfaz basados en Bootstrap 5 (integrado mediante CDN en index.html para optimizar el peso del bundle).
 
 **Lineamientos de diseño visual:**
 - **Paleta de colores:** Se utiliza el tema estándar de Bootstrap 5. Color primario (`bg-primary`, `btn-primary`) para encabezados y acciones principales.

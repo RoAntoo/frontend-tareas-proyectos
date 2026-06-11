@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, signal, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -24,7 +24,7 @@ function dateRangeValidator(control: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'app-update-project',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './update-project.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -43,7 +43,7 @@ export class UpdateProjectComponent implements OnInit {
   nameConflict = signal(false);
 
   ngOnInit(): void {
-    this.projectId = Number(this.route.snapshot.paramMap.get('id'));
+    this.projectId = Number(this.route.snapshot.paramMap.get('projectId'));
 
     this.form = this.fb.group(
       {

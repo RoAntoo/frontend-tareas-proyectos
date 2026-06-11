@@ -46,12 +46,12 @@ de los proyectos actualizada sin necesidad de eliminar y recrear.
   `ChangeDetectionStrategy.OnPush`
 - **Formulario:** Reactive Forms — validaciones síncronas en cliente (required, dateRange)
   y manejo de errores asincrónicos desde el servidor (409, 400)
-- **Estilos:** Bootstrap 5 (o la librería acordada a nivel proyecto)
+- **Estilos:** Bootstrap 5 (cargado de forma global vía CDN de jsDelivr en `index.html` para evitar dependencias locales npm y no duplicar estilos en el bundle)
 - **Comunicación:** `HttpClient` con interceptor JWT existente (`auth.interceptor.ts`)
-- **Servicio:** `ProjectService` en `src/app/services/` — método `updateProject(id, dto)`
-- **Routing:** ruta `/projects/:id/edit`; al guardar con éxito redirigir a `/projects` o al
+- **Servicio:** `ProjectService` en `src/app/services/` — método `updateProject(projectId, dto)`
+- **Routing:** ruta `/projects/:projectId/edit`; al guardar con éxito redirigir a `/projects` o al
   detalle del proyecto
-- **Estado:** el componente carga el proyecto actual con `GET /projects/:id` al inicializar
+- **Estado:** el componente carga el proyecto actual con `GET /projects/:projectId` al inicializar
   (o recibe el objeto vía state del router si ya está disponible) y pre-popula el formulario
 - **Manejo de errores:** mostrar mensaje inline bajo el campo correspondiente para 400/409;
   mostrar alerta global para 404 y errores de red

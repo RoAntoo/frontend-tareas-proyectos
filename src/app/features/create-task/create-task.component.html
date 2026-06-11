@@ -45,9 +45,12 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="loading()">
-          @if (loading()) { Guardando... } @else { Crear Tarea }
-        </button>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="loading()">
+            @if (loading()) { Guardando... } @else { Crear Tarea }
+          </button>
+          <a class="btn btn-outline-secondary" [routerLink]="['/projects', projectId, 'tasks']">Cancelar</a>
+        </div>
 
       </form>
     </div>

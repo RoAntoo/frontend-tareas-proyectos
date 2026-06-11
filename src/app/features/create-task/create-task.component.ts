@@ -1,21 +1,51 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TaskService, TaskStatus } from '../../service/task.service';
 
 @Component({
   selector: 'app-create-task',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './create-task.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [
+    `
+      .btn-primary {
+        background-color: #A5D6A7 !important;
+        border: none !important;
+        color: #2C3E50 !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        transition: background-color 0.2s ease-in-out !important;
+        padding: 10px 20px !important;
+      }
+      .btn-primary:hover:not(:disabled) {
+        background-color: #81C784 !important;
+        color: #2C3E50 !important;
+      }
+      .btn-outline-secondary {
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        border-color: #ccc !important;
+        color: #555 !important;
+        padding: 10px 20px !important;
+      }
+      .btn-outline-secondary:hover {
+        background-color: #fce4ec !important;
+        color: #2C3E50 !important;
+        border-color: #f8bbd0 !important;
+      }
+    `
+  ]
 })
-export class CreateTaskComponent {
+export class CreateTaskComponent implements OnInit {
   private fb = inject(FormBuilder);
   private taskService = inject(TaskService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
+  projectId!: number;
   loading = signal(false);
   errorMessage = signal<string | null>(null);
   successMessage = signal<string | null>(null);
@@ -27,17 +57,20 @@ export class CreateTaskComponent {
     status: ['TODO', Validators.required],
   });
 
+  ngOnInit(): void {
+    this.projectId = Number(this.route.snapshot.paramMap.get('projectId'));
+  }
+
   onSubmit(): void {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
 
-    const projectId = Number(this.route.snapshot.paramMap.get('projectId'));
     this.loading.set(true);
     this.errorMessage.set(null);
     this.successMessage.set(null);
 
     this.taskService
-      .createTask(projectId, {
+      .createTask(this.projectId, {
         id: null,
         title: this.form.value.title!,
         estimateHours: this.form.value.estimateHours!,
@@ -47,8 +80,11 @@ export class CreateTaskComponent {
       .subscribe({
         next: () => {
           this.loading.set(false);
-          this.successMessage.set('Tarea creada exitosamente.');
+          this.successMessage.set('Tarea creada exitosamente. Redirigiendo...');
           this.form.reset({ status: 'TODO' });
+          setTimeout(() => {
+            this.router.navigate(['/projects', this.projectId, 'tasks']);
+          }, 2000);
         },
         error: (err) => {
           this.loading.set(false);

@@ -3,14 +3,53 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TaskService, TaskResponse } from '../../service/task.service';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-update-task',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, DatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './update-task.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styles: [
+    `
+      .card {
+        border-radius: 12px !important;
+        border: 1px solid #e0e0e0 !important;
+        overflow: hidden;
+      }
+      .card-header {
+        background-color: #E8F5E9 !important;
+        color: #2C3E50 !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+        padding: 15px 20px !important;
+      }
+      .btn-primary {
+        background-color: #A5D6A7 !important;
+        border: none !important;
+        color: #2C3E50 !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        transition: background-color 0.2s ease-in-out !important;
+        padding: 10px 20px !important;
+      }
+      .btn-primary:hover:not(:disabled) {
+        background-color: #81C784 !important;
+        color: #2C3E50 !important;
+      }
+      .btn-outline-secondary {
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        border-color: #ccc !important;
+        color: #555 !important;
+        padding: 10px 20px !important;
+      }
+      .btn-outline-secondary:hover {
+        background-color: #fce4ec !important;
+        color: #2C3E50 !important;
+        border-color: #f8bbd0 !important;
+      }
+    `
+  ]
 })
 export class UpdateTaskComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -81,7 +120,7 @@ export class UpdateTaskComponent implements OnInit {
       .subscribe({
         next: () => {
           this.isSaving.set(false);
-          this.router.navigate(['/projects', this.projectId]);
+          this.router.navigate(['/projects', this.projectId, 'tasks']);
         },
         error: (err) => {
           const msg = err.error?.message || 'Ocurrió un error al guardar. Intentá de nuevo.';

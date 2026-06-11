@@ -49,9 +49,9 @@ Response 409: violación de regla de negocio
 - **Servicio:** `task.service` en `src/app/service/task.service.ts` — métodos `getTask(projectId, taskId)` y `updateTask(projectId, taskId, dto)`.
 - **Routing:** ruta `/projects/:projectId/tasks/:taskId/edit`. Los params se leen con `ActivatedRoute`.
 - **Estado de carga:** signals locales para `isLoading`, `isSaving` y `errorMessage`.
-- **Estilos:** Bootstrap 5 (o la librería acordada con los docentes a nivel proyecto).
+- **Estilos:** Bootstrap 5 (cargado de forma global vía CDN de jsDelivr en `index.html` para evitar dependencias locales npm y no sobrecargar el bundle final).
 - **Errores HTTP:** el interceptor JWT ya existente maneja el token; el componente solo maneja los errores de respuesta (400, 404, 409) mostrando el mensaje del backend.
-- **Navegación post-guardado:** redirigir a `/projects/:projectId` (detalle del proyecto) al completar exitosamente.
+- **Navegación post-guardado:** redirigir a `/projects/:projectId/tasks` (listado de tareas del proyecto) al completar exitosamente.
 
 ---
 
@@ -65,7 +65,7 @@ Response 409: violación de regla de negocio
 **CA-2 — Guardado exitoso:**
 > Dado que el formulario tiene datos válidos (`title` no vacío, `estimateHours` > 0),
 > cuando el usuario hace clic en "Guardar",
-> entonces se envía `PUT /projects/3/tasks/7`, se muestra feedback de éxito y se redirige al detalle del proyecto.
+> entonces se envía `PUT /projects/3/tasks/7`, se muestra feedback de éxito y se redirige al listado de tareas del proyecto.
 
 **CA-3 — Validación client-side:**
 > Dado que el usuario borra el título o ingresa `estimateHours = 0`,
@@ -85,7 +85,7 @@ Response 409: violación de regla de negocio
 **CA-6 — Tarea no encontrada:**
 > Dado que el `taskId` o `projectId` no existe en el backend,
 > cuando el componente intenta pre-cargar los datos,
-> entonces se muestra un mensaje "Tarea no encontrada" y un link para volver al listado de proyectos.
+> entonces se muestra un mensaje "Tarea no encontrada" y un link para volver al listado de tareas.
 
 **CA-7 — Estado de guardado:**
 > Dado que el usuario hace clic en "Guardar",
