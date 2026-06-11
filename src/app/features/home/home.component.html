@@ -1,26 +1,239 @@
-<div class="container d-flex align-items-center justify-content-center my-5">
-  <div class="row justify-content-center w-100">
-    <div class="col-md-10 col-lg-8 text-center p-5 rounded-4 shadow-sm hero-container">
+<div class="home-wrapper">
 
-      <div class="display-1 mb-4">🚀</div>
+  <!-- Nodos decorativos del fondo (Izquierda) -->
+  <div class="network-container left-network d-none d-xl-block">
+    <svg class="network-lines" width="300" height="400">
+      <line x1="150" y1="50" x2="80" y2="200" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="80" y1="200" x2="150" y2="350" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="150" y1="50" x2="220" y2="150" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="220" y1="150" x2="150" y2="350" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="80" y1="200" x2="220" y2="150" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+    </svg>
 
-      <h1 class="display-4 fw-bold mb-3" style="color: #2C3E50;">
+    <div class="node node-milestone" style="top: 30px; left: 130px;">
+      <span class="node-icon">🚩</span>
+      <span class="node-label">Milestone</span>
+    </div>
+    <div class="node node-tasks" style="top: 180px; left: 50px;">
+      <span class="node-icon">🥟</span>
+      <span class="node-label">Milanesa</span>
+    </div>
+    <div class="node node-task" style="top: 330px; left: 130px;">
+      <span class="node-icon">✏️</span>
+      <span class="node-label">Tarea</span>
+    </div>
+    <div class="node node-rocket-fly" style="top: 130px; left: 200px;">
+      <span class="node-icon">🚀</span>
+    </div>
+  </div>
+
+  <!-- Nodos decorativos del fondo (Derecha) -->
+  <div class="network-container right-network d-none d-xl-block">
+    <svg class="network-lines" width="300" height="400">
+      <line x1="150" y1="50" x2="80" y2="180" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="80" y1="180" x2="150" y2="330" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="150" y1="50" x2="220" y2="200" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="220" y1="200" x2="150" y2="330" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+      <line x1="80" y1="180" x2="220" y2="200" stroke="rgba(44, 62, 80, 0.08)" stroke-width="2" />
+    </svg>
+
+    <div class="node node-milestone" style="top: 30px; left: 130px;">
+      <span class="node-icon">⭐</span>
+      <span class="node-label">Milestone</span>
+    </div>
+    <div class="node node-chat" style="top: 160px; left: 50px;">
+      <span class="node-icon">🧉</span>
+      <span class="node-label">Mate</span>
+    </div>
+    <div class="node node-task" style="top: 310px; left: 130px;">
+      <span class="node-icon">📊</span>
+      <span class="node-label">Barra</span>
+    </div>
+    <div class="node node-chart" style="top: 180px; left: 200px;">
+      <span class="node-icon">📈</span>
+      <span class="node-label">Quiebra</span>
+    </div>
+  </div>
+
+  <!-- Contenido Principal -->
+  <div class="container py-4">
+
+    <!-- Tarjeta Hero Central -->
+    <div class="hero-card shadow-lg p-5 text-center mx-auto mb-5">
+      <div class="hero-rocket">🚀</div>
+      <h1 class="display-5 fw-extrabold mb-3">
         Plataforma de Gestión de Proyectos y Tareas
       </h1>
-
-      <p class="lead mb-5 text-muted">
-        Organizá tus equipos, dale seguimiento a tus objetivos en tiempo real y cumplí tus metas en un solo lugar de forma simple y estética.
+      <p class="lead mb-4 mx-auto text-muted" style="max-width: 600px;">
+        Organizá tus equipos, dale seguimiento a tus objetivos en <span class="highlight">tiempo real</span> y cumplí
+        tus metas en un solo lugar de forma simple y estética.
       </p>
 
-      <div class="d-flex flex-wrap justify-content-center gap-3">
-        <a routerLink="/projects" class="btn btn-lg px-4 py-3 fw-semibold shadow-sm btn-verde">
+      <!-- Visualización del flujo de tareas -->
+      <div class="flow-preview my-4 py-2 px-3 mx-auto">
+        <div class="flow-wrapper">
+          <span class="flow-item flow-todo">Tareas</span>
+          <i class="bi bi-arrow-right flow-arrow"></i>
+          <span class="flow-item flow-design">Diseño</span>
+          <i class="bi bi-arrow-right flow-arrow"></i>
+          <span class="flow-item flow-dev">Desarrollo</span>
+          <i class="bi bi-arrow-right flow-arrow"></i>
+          <span class="flow-item flow-test">Testeo</span>
+          <i class="bi bi-arrow-right flow-arrow"></i>
+          <span class="flow-item flow-done">Aprobado</span>
+        </div>
+        <div class="flow-caption">Visualización de Flujo de Tareas</div>
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+        <a routerLink="/projects" class="btn-hero btn-projects">
           📁 Ver Mis Proyectos
         </a>
-        <a routerLink="/projects/new" class="btn btn-lg px-4 py-3 fw-semibold shadow-sm btn-rosa">
+        <a routerLink="/projects/new" class="btn-hero btn-create-proj">
           ✨ Crear Proyecto Nuevo
         </a>
       </div>
+    </div>
+
+    <!-- Dashboard inferior -->
+    <div class="dashboard-section row g-4 mt-2">
+
+      <!-- Sección de Resumen (Izquierda) -->
+      <div class="col-lg-7">
+        <h4 class="section-title mb-4">
+          <i class="bi bi-grid-3x3-gap-fill text-pink"></i> Sección de Resumen
+        </h4>
+
+        <div class="summary-cards-container">
+          @if (loading()) {
+          <div class="spinner-container">
+            <div class="spinner-small"></div>
+            <p class="text-muted m-0 ms-2">Cargando proyectos...</p>
+          </div>
+          } @else {
+          @if (projects().length > 0) {
+          <div class="summary-grid">
+            @for (project of projects(); track project.id) {
+            <a [routerLink]="['/projects', project.id, 'tasks']" class="summary-card text-decoration-none">
+              <h5 class="project-name">{{ project.name }}</h5>
+              <div class="project-meta">
+                <span class="badge {{ getStatusClass(project.status) }}">
+                  {{ getStatusLabel(project.status) }}
+                </span>
+                <span class="task-count">Ver Tareas <i class="bi bi-arrow-right-short"></i></span>
+              </div>
+              <!-- Barra de progreso decorativa/real basada en el estado -->
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill {{ getStatusClass(project.status) }}"
+                  [style.width.%]="project.status === 'CLOSED' ? 100 : project.status === 'ACTIVE' ? 65 : 20">
+                </div>
+              </div>
+            </a>
+            }
+          </div>
+          } @else {
+          <!-- Datos Mock/Fallback si no hay proyectos -->
+          <div class="summary-grid">
+            <a routerLink="/projects" class="summary-card text-decoration-none">
+              <h5 class="project-name">Rediseño Web</h5>
+              <div class="project-meta">
+                <span class="badge active">En progreso</span>
+                <span class="task-count">2 tareas abiertas</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill active" style="width: 65%;"></div>
+              </div>
+            </a>
+            <a routerLink="/projects" class="summary-card text-decoration-none">
+              <h5 class="project-name">Campaña de Marketing</h5>
+              <div class="project-meta">
+                <span class="badge closed">Atascado</span>
+                <span class="task-count">3 tareas abiertas</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill closed" style="width: 35%;"></div>
+              </div>
+            </a>
+            <a routerLink="/projects" class="summary-card text-decoration-none">
+              <h5 class="project-name">App Móvil</h5>
+              <div class="project-meta">
+                <span class="badge active">En progreso</span>
+                <span class="task-count">2 tareas abiertas</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill active" style="width: 50%;"></div>
+              </div>
+            </a>
+          </div>
+          }
+          }
+        </div>
+      </div>
+
+      <!-- Sección de Actividad Reciente (Derecha) -->
+      <div class="col-lg-5">
+        <h4 class="section-title mb-4">
+          <i class="bi bi-clock-history text-mint"></i> Sección de Actividad Reciente
+        </h4>
+
+        <div class="activity-feed-card p-4">
+          <div class="activity-list">
+            @if (recentTasks().length > 0) {
+              @for (task of recentTasks(); track task.id) {
+                <div class="activity-item">
+                  <span class="activity-dot {{ task.status === 'DONE' ? 'dot-green' : task.status === 'IN_PROGRESS' ? 'dot-blue' : 'dot-pink' }}"></span>
+                  <div class="activity-content">
+                    Nueva tarea <a [routerLink]="['/projects', task.projectId, 'tasks']" class="text-decoration-none"><em>"{{ task.title }}"</em></a> 
+                    añadida a <strong>"{{ task.projectName }}"</strong>
+                    <span class="badge-inline {{ task.status.toLowerCase() }}-inline ms-1">{{ getTaskStatusLabel(task.status) }}</span>
+                    <span class="time">{{ formatDate(task.createdAt) }}</span>
+                  </div>
+                </div>
+              }
+            } @else {
+              <!-- Fallback con la actividad mockup si no hay tareas reales -->
+              <div class="activity-item">
+                <span class="activity-dot dot-green"></span>
+                <div class="activity-content">
+                  <strong>Juan Pérez</strong> completó la tarea <em>"Diseñar wireframes"</em> <span class="time">(hace 10 min)</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot dot-pink"></span>
+                <div class="activity-content">
+                  Nueva tarea <em>"Crear Mockups"</em> añadida a <strong>"Rediseño Web"</strong> <span class="time">(hace 30 min)</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot dot-blue"></span>
+                <div class="activity-content">
+                  Nueva tarea <em>"Crear Mockups"</em> añadida a <strong>"Rediseño Web"</strong> <span class="time">(hace 30 min)</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <span class="activity-dot dot-green"></span>
+                <div class="activity-content">
+                  <strong>Lucas R.</strong> completó la tarea <em>"Setup de Base de Datos"</em> <span class="time">(hace 2 horas)</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
 
     </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5 pt-4 pb-2 border-top">
+      <div class="footer-links">
+        <a href="#" class="footer-link">Legal</a> |
+        <a href="#" class="footer-link">Términos y Condiciones</a> |
+        <a href="#" class="footer-link">Privacidad</a> |
+        <a href="#" class="footer-link">Contactos</a>
+      </div>
+      <p class="text-muted mt-2 small">&copy; 2026 Nivi. Todos los derechos reservados.</p>
+    </footer>
+
   </div>
+
 </div>
