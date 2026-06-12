@@ -83,6 +83,9 @@ import { ProjectResponse } from '../../core/models/project.models';
                   <a class="btn-action btn-secondary-custom" [routerLink]="['/projects', project.id, 'edit']">
                     <i class="bi bi-pencil-square"></i> Editar
                   </a>
+                  <button class="btn-action btn-danger-custom" (click)="deleteProject(project.id, project.name)">
+                    <i class="bi bi-trash"></i> Eliminar
+                  </button>
                 </div>
               </div>
             }
@@ -99,6 +102,32 @@ import { ProjectResponse } from '../../core/models/project.models';
         }
       }
     </div>
+
+    @if (isConfirmOpen() && projectToDelete()) {
+      <div class="modal-overlay">
+        <div class="custom-modal-card">
+          <div class="custom-modal-header">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <h3>¿Eliminar Proyecto?</h3>
+          </div>
+          <div class="custom-modal-body">
+            <p>¿Estás seguro de que deseas eliminar el proyecto <strong>"{{ projectToDelete()?.name }}"</strong>?</p>
+            <div class="custom-modal-warning-desc">
+              <i class="bi bi-info-circle-fill"></i>
+              <span>Esta acción es irreversible y eliminará todas sus tareas asociadas.</span>
+            </div>
+          </div>
+          <div class="custom-modal-actions">
+            <button class="btn-modal-cancel" (click)="cancelDelete()">
+              Cancelar
+            </button>
+            <button class="btn-modal-confirm" (click)="confirmDelete()">
+              Sí, Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    }
   `,
   styles: [
     `
@@ -366,6 +395,133 @@ import { ProjectResponse } from '../../core/models/project.models';
         background-color: #f8bbd0;
         transform: scale(1.02);
       }
+      .btn-danger-custom {
+        background-color: #ef5350;
+        color: #ffffff;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-danger-custom:hover {
+        background-color: #e53935;
+        transform: scale(1.02);
+      }
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(44, 62, 80, 0.4);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1050;
+        animation: fadeInOverlay 0.2s ease-out;
+      }
+      .custom-modal-card {
+        background: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        width: 100%;
+        max-width: 480px;
+        padding: 30px;
+        margin: 20px;
+        animation: scaleInCard 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .custom-modal-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .custom-modal-header i {
+        font-size: 2rem;
+        color: #ef5350;
+        animation: pulseIcon 2s infinite;
+      }
+      .custom-modal-header h3 {
+        margin: 0;
+        font-weight: 800;
+        color: #2c3e50;
+        font-size: 1.4rem;
+        letter-spacing: -0.3px;
+      }
+      .custom-modal-body {
+        margin-bottom: 25px;
+        color: #5a6b7c;
+        line-height: 1.6;
+        font-size: 1rem;
+      }
+      .custom-modal-body strong {
+        color: #2c3e50;
+      }
+      .custom-modal-warning-desc {
+        margin-top: 15px;
+        font-size: 0.88rem;
+        color: #c62828;
+        background-color: #ffebee;
+        padding: 12px 16px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+      }
+      .custom-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+      }
+      .btn-modal-cancel {
+        padding: 10px 20px;
+        background-color: #fce4ec;
+        color: #2c3e50;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 10px rgba(248, 187, 208, 0.2);
+      }
+      .btn-modal-cancel:hover {
+        background-color: #f8bbd0;
+        transform: translateY(-1px);
+      }
+      .btn-modal-confirm {
+        padding: 10px 20px;
+        background-color: #ef5350;
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 10px rgba(239, 83, 80, 0.25);
+      }
+      .btn-modal-confirm:hover {
+        background-color: #e53935;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 15px rgba(239, 83, 80, 0.35);
+      }
+
+      @keyframes fadeInOverlay {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes scaleInCard {
+        from { transform: scale(0.9) translateY(10px); opacity: 0; }
+        to { transform: scale(1) translateY(0); opacity: 1; }
+      }
+      @keyframes pulseIcon {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+      }
     `,
   ],
 })
@@ -377,6 +533,8 @@ export class ProjectListComponent implements OnInit {
   loading = signal<boolean>(false);
   error = signal<string | null>(null);
   filterStatus = signal<string>('TODOS');
+  isConfirmOpen = signal<boolean>(false);
+  projectToDelete = signal<{ id: number; name: string } | null>(null);
 
   // Computed Signal para el filtro
   filteredProjects = computed(() => {
@@ -412,5 +570,32 @@ export class ProjectListComponent implements OnInit {
   onFilterChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.filterStatus.set(selectElement.value);
+  }
+
+  deleteProject(id: number, name: string): void {
+    this.projectToDelete.set({ id, name });
+    this.isConfirmOpen.set(true);
+  }
+
+  confirmDelete(): void {
+    const project = this.projectToDelete();
+    if (!project) return;
+
+    this.isConfirmOpen.set(false);
+    this.projectService.deleteProject(project.id).subscribe({
+      next: () => {
+        this.projectToDelete.set(null);
+        this.loadProjects();
+      },
+      error: (err: Error) => {
+        this.projectToDelete.set(null);
+        this.error.set(`Error al eliminar el proyecto: ${err.message}`);
+      }
+    });
+  }
+
+  cancelDelete(): void {
+    this.isConfirmOpen.set(false);
+    this.projectToDelete.set(null);
   }
 }
