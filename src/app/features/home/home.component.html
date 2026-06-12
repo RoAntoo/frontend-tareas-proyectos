@@ -132,39 +132,15 @@
             }
           </div>
           } @else {
-          <!-- Datos Mock/Fallback si no hay proyectos -->
-          <div class="summary-grid">
-            <a routerLink="/projects" class="summary-card text-decoration-none">
-              <h5 class="project-name">Rediseño Web</h5>
-              <div class="project-meta">
-                <span class="badge active">En progreso</span>
-                <span class="task-count">2 tareas abiertas</span>
-              </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar-fill active" style="width: 65%;"></div>
-              </div>
-            </a>
-            <a routerLink="/projects" class="summary-card text-decoration-none">
-              <h5 class="project-name">Campaña de Marketing</h5>
-              <div class="project-meta">
-                <span class="badge closed">Atascado</span>
-                <span class="task-count">3 tareas abiertas</span>
-              </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar-fill closed" style="width: 35%;"></div>
-              </div>
-            </a>
-            <a routerLink="/projects" class="summary-card text-decoration-none">
-              <h5 class="project-name">App Móvil</h5>
-              <div class="project-meta">
-                <span class="badge active">En progreso</span>
-                <span class="task-count">2 tareas abiertas</span>
-              </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar-fill active" style="width: 50%;"></div>
-              </div>
-            </a>
-          </div>
+            <!-- Estado vacío si no hay proyectos -->
+            <div class="empty-state-container w-100">
+              <div class="empty-state-icon">📁</div>
+              <div class="empty-state-title">No hay proyectos registrados</div>
+              <p class="empty-state-text">Comenzá a organizar tu trabajo creando tu primer proyecto.</p>
+              <a routerLink="/projects/new" class="btn-empty-action">
+                ✨ Crear Proyecto
+              </a>
+            </div>
           }
           }
         </div>
@@ -191,30 +167,11 @@
                 </div>
               }
             } @else {
-              <!-- Fallback con la actividad mockup si no hay tareas reales -->
-              <div class="activity-item">
-                <span class="activity-dot dot-green"></span>
-                <div class="activity-content">
-                  <strong>Juan Pérez</strong> completó la tarea <em>"Diseñar wireframes"</em> <span class="time">(hace 10 min)</span>
-                </div>
-              </div>
-              <div class="activity-item">
-                <span class="activity-dot dot-pink"></span>
-                <div class="activity-content">
-                  Nueva tarea <em>"Crear Mockups"</em> añadida a <strong>"Rediseño Web"</strong> <span class="time">(hace 30 min)</span>
-                </div>
-              </div>
-              <div class="activity-item">
-                <span class="activity-dot dot-blue"></span>
-                <div class="activity-content">
-                  Nueva tarea <em>"Crear Mockups"</em> añadida a <strong>"Rediseño Web"</strong> <span class="time">(hace 30 min)</span>
-                </div>
-              </div>
-              <div class="activity-item">
-                <span class="activity-dot dot-green"></span>
-                <div class="activity-content">
-                  <strong>Lucas R.</strong> completó la tarea <em>"Setup de Base de Datos"</em> <span class="time">(hace 2 horas)</span>
-                </div>
+              <!-- Estado vacío si no hay tareas / actividad -->
+              <div class="empty-state-container w-100" style="border: none; background: transparent; padding: 20px 10px;">
+                <div class="empty-state-icon" style="font-size: 1.8rem;">🔔</div>
+                <div class="empty-state-title" style="font-size: 0.9rem;">Sin actividad reciente</div>
+                <p class="empty-state-text" style="font-size: 0.75rem; margin-bottom: 0;">Aquí aparecerán las últimas tareas que agregues a tus proyectos.</p>
               </div>
             }
           </div>

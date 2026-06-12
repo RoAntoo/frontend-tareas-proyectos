@@ -93,6 +93,11 @@ cuando el usuario intenta guardar,
 entonces se muestra una alerta "Error al guardar. Intentá de nuevo." sin perder los datos
 del formulario.
 
+**CA-7 — Diseño visual premium y estructura (Glassmorphism)**
+Dado que el usuario accede a la pantalla de edición `/projects/:projectId/edit`,
+cuando el formulario se renderiza en la pantalla,
+entonces se visualiza como una tarjeta centralizada modal sobre el fondo con bordes redondeados (`border-radius: 20px`), un sombreado suave con tonos pastel y efecto de desenfoque translúcido (Glassmorphism con `backdrop-filter: blur(12px)`), donde los campos de entrada de texto y fecha cuentan con iconos representativos alineados a la izquierda y el campo de descripción cuenta con una caja de edición integrada con barra de herramientas decorativa.
+
 ## Prompts utilizados
 - Agente IA: Claude (claude.ai)
 - Prompt principal: ver archivo prompt-05.md adjunto.
