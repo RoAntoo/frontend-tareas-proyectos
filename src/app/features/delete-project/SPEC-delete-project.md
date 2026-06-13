@@ -19,7 +19,10 @@ DELETE /projects/{projectId}
 - Los errores devueltos por el servidor durante la baja deben mostrarse claramente al usuario sin romper el flujo del listado.
 
 **Lineamientos técnicos:**
-- **Componentes:** Standalone components, Angular 17.
+- **Componentes:**
+  - Standalone components, Angular 17.
+  - Componente principal: `ProjectListComponent` en `src/app/features/get-projects/` (con archivos `.html` y `.css` independientes).
+  - Componente de confirmación: `ConfirmationModalComponent` reusable en `src/app/shared/components/confirmation-modal/` (con archivos `.html` y `.css` independientes).
 - **Servicio:** `ProjectService` en `src/app/service/project.service.ts` con método `deleteProject(id: number): Observable<void>`.
 - **Manejo del Estado:** El listado refresca su señal `projects` reactivamente volviendo a llamar a `loadProjects()`.
 - **Estilos:** Bootstrap 5 con estilos customizados integrando colores pastel y hover micro-animados acordes a la guía de diseño general.
@@ -36,5 +39,5 @@ DELETE /projects/{projectId}
 4. Dado que el usuario confirma la eliminación, cuando el servidor retorna un error (por ejemplo, error de red o de autenticación), entonces se visualiza una alerta global de error indicando "Error al eliminar el proyecto" junto con el mensaje correspondiente, y el listado no se actualiza erróneamente.
 
 **Prompts utilizados:**
-- Agente IA: Antigravity (Gemini 3.5 Flash)
+- Agente IA: Gemini 3.5 Flash
 - Prompt principal: ver archivo `prompt-delete.md` adjunto.
