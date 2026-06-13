@@ -1,0 +1,99 @@
+<div class="project-container">
+  <div class="header">
+    <h2><i class="bi bi-folder2-open text-mint"></i> Listado de Proyectos</h2>
+    <a class="btn-create" routerLink="/projects/new">
+      <i class="bi bi-plus-lg"></i> Nuevo Proyecto
+    </a>
+  </div>
+
+  <div class="filter-section">
+    <div class="filter-wrapper">
+      <label for="statusFilter" class="fw-semibold">
+        <i class="bi bi-funnel text-pink"></i> Filtrar por estado:
+      </label>
+      <select id="statusFilter" (change)="onFilterChange($event)">
+        <option value="TODOS">Todos los proyectos</option>
+        <option value="PLANNED">Planificado (PLANNED)</option>
+        <option value="ACTIVE">Activo (ACTIVE)</option>
+        <option value="CLOSED">Cerrado (CLOSED)</option>
+      </select>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p class="loading">Cargando proyectos desde el servidor...</p>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-card">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <p>{{ error() }}</p>
+    </div>
+  }
+
+  @if (!loading() && !error()) {
+    @if (filteredProjects().length > 0) {
+      <div class="project-grid">
+        @for (project of filteredProjects(); track project.id) {
+          <div class="project-card">
+            <div class="card-content">
+              <div class="card-header-project">
+                <h3>{{ project.name }}</h3>
+                <span class="badge {{ project.status | lowercase }}">{{ project.status }}</span>
+              </div>
+              <p class="description">{{ project.description || 'Sin descripción disponible.' }}</p>
+              
+              <div class="project-dates">
+                <div class="date-item">
+                  <i class="bi bi-calendar-event text-mint"></i>
+                  <span><strong>Inicio:</strong> {{ project.startDate }}</span>
+                </div>
+                <div class="date-item">
+                  <i class="bi bi-calendar-check text-pink"></i>
+                  <span><strong>Fin:</strong> {{ project.endDate }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <a class="btn-action btn-primary-custom" [routerLink]="['/projects', project.id, 'tasks']">
+                <i class="bi bi-list-task"></i> Ver Tareas
+              </a>
+              <a class="btn-action btn-secondary-custom" [routerLink]="['/projects', project.id, 'edit']">
+                <i class="bi bi-pencil-square"></i> Editar
+              </a>
+              <button class="btn-action btn-danger-custom" (click)="deleteProject(project.id, project.name)">
+                <i class="bi bi-trash"></i> Eliminar
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <i class="bi bi-folder-x"></i>
+        @if (projects().length === 0) {
+          <p>No hay proyectos registrados actualmente.</p>
+        } @else {
+          <p>No se encontraron proyectos con el estado seleccionado.</p>
+        }
+      </div>
+    }
+  }
+</div>
+
+@if (isConfirmOpen() && projectToDelete()) {
+  <app-confirmation-modal
+    title="¿Eliminar Proyecto?"
+    [message]="confirmMessage()"
+    warningText="Esta acción es irreversible y eliminará todas sus tareas asociadas."
+    confirmText="Sí, Eliminar"
+    confirmLoadingText="Eliminando..."
+    cancelText="Cancelar"
+    [isLoading]="isDeleting()"
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()">
+  </app-confirmation-modal>
+}
