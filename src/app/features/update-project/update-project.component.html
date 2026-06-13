@@ -1,0 +1,162 @@
+<div class="edit-project-container py-5">
+  
+  <!-- Error al cargar -->
+  @if (loadError()) {
+    <div class="alert alert-danger shadow-sm border-0 rounded-3 p-3 mb-4 d-flex align-items-center gap-2">
+      <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+      <div>
+        {{ loadError() }}
+        <a routerLink="/projects" class="alert-link ms-2">Volver al listado</a>
+      </div>
+    </div>
+  }
+
+  <!-- Cargando -->
+  @if (loading() && !loadError()) {
+    <div class="text-center my-5 py-5">
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="text-muted mt-3 fw-semibold">Cargando información del proyecto...</p>
+    </div>
+  }
+
+  <!-- Formulario -->
+  @if (!loading() && !loadError()) {
+    <div class="card-modal animate-fade-in">
+      
+      <!-- Encabezado de la Tarjeta -->
+      <div class="card-header-custom">
+        <span class="brand-icon">🌱</span>
+        <div class="header-text">
+          <h3>Editar Proyecto</h3>
+          <p>{{ form.get('name')?.value || 'Sin nombre' }}</p>
+        </div>
+      </div>
+
+      <!-- Cuerpo de la Tarjeta -->
+      <div class="card-body-custom">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <!-- Sección 1: Información General -->
+          <div class="form-section-title">Información General</div>
+          <div class="mb-4">
+            <label for="name" class="form-label fw-bold small text-muted mb-2">Nombre del Proyecto *</label>
+            <div class="input-group-custom">
+              <i class="bi bi-person input-group-icon"></i>
+              <input
+                id="name"
+                type="text"
+                class="form-control-custom"
+                [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched || nameConflict()"
+                formControlName="name"
+                placeholder="Nombre del proyecto"
+              />
+            </div>
+            @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+              <div class="invalid-feedback d-block mt-1">El nombre es obligatorio.</div>
+            }
+            @if (nameConflict()) {
+              <div class="invalid-feedback d-block mt-1">Ya existe un proyecto con ese nombre.</div>
+            }
+          </div>
+
+          <!-- Sección 2: Fechas y Plazos -->
+          <div class="form-section-title">Fechas y Plazos</div>
+          <div class="row g-3 mb-4">
+            <!-- Fecha de Inicio -->
+            <div class="col-md-6">
+              <label for="startDate" class="form-label fw-bold small text-muted mb-2">Fecha de Inicio *</label>
+              <div class="input-group-custom">
+                <i class="bi bi-calendar-event input-group-icon"></i>
+                <input
+                  id="startDate"
+                  type="date"
+                  class="form-control-custom"
+                  [class.is-invalid]="form.get('startDate')?.invalid && form.get('startDate')?.touched"
+                  formControlName="startDate"
+                />
+              </div>
+              @if (form.get('startDate')?.hasError('required') && form.get('startDate')?.touched) {
+                <div class="invalid-feedback d-block mt-1">La fecha de inicio es obligatoria.</div>
+              }
+            </div>
+
+            <!-- Fecha de Fin -->
+            <div class="col-md-6">
+              <label for="endDate" class="form-label fw-bold small text-muted mb-2">Fecha de Fin *</label>
+              <div class="input-group-custom">
+                <i class="bi bi-calendar-check input-group-icon"></i>
+                <input
+                  id="endDate"
+                  type="date"
+                  class="form-control-custom"
+                  [class.is-invalid]="form.get('endDate')?.invalid && form.get('endDate')?.touched || form.hasError('dateRange')"
+                  formControlName="endDate"
+                />
+              </div>
+              @if (form.get('endDate')?.hasError('required') && form.get('endDate')?.touched) {
+                <div class="invalid-feedback d-block mt-1">La fecha de fin es obligatoria.</div>
+              }
+              @if (form.hasError('dateRange') && form.get('endDate')?.touched) {
+                <div class="invalid-feedback d-block mt-1">La fecha de fin debe ser mayor o igual a la de inicio.</div>
+              }
+            </div>
+          </div>
+
+          <!-- Sección 3: Detalles Adicionales -->
+          <div class="form-section-title">Detalles Adicionales</div>
+          <div class="mb-4">
+            <label for="description" class="form-label fw-bold small text-muted mb-2">Descripción</label>
+            <div class="textarea-wrapper">
+              <div class="textarea-toolbar">
+                <div class="toolbar-left">
+                  <i class="bi bi-chat-text text-muted"></i>
+                  <span class="ms-2">Descripción</span>
+                </div>
+                <div class="toolbar-right">
+                  <i class="bi bi-type-bold fw-bold"></i>
+                  <i class="bi bi-type-italic mx-2"></i>
+                  <i class="bi bi-list-ul"></i>
+                </div>
+              </div>
+              <textarea
+                id="description"
+                class="textarea-custom"
+                rows="4"
+                formControlName="description"
+                placeholder="Escribe detalles adicionales sobre el proyecto..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Error al guardar -->
+          @if (saveError()) {
+            <div class="alert alert-danger border-0 rounded-3 p-3 mb-4 d-flex align-items-center gap-2">
+              <i class="bi bi-exclamation-octagon-fill"></i>
+              <span>{{ saveError() }}</span>
+            </div>
+          }
+
+          <!-- Botones de Acción -->
+          <div class="d-flex justify-content-end gap-3 mt-4 pt-3 border-top" style="border-top-color: rgba(0,0,0,0.05) !important;">
+            <button type="submit" class="btn-save-custom" [disabled]="form.invalid || loading()">
+              <i class="bi bi-floppy"></i> Guardar Cambios
+            </button>
+            <a routerLink="/projects" class="btn-cancel-custom">
+              <i class="bi bi-x-lg"></i> Cancelar
+            </a>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Pie de página Nivi -->
+    <div class="card-footer-custom">
+      Nivi Project Management - v1.0
+    </div>
+  }
+
+</div>

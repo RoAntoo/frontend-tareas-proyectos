@@ -1,1 +1,113 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary-mint: #A5D6A7;
+  --primary-mint-hover: #81C784;
+  --primary-mint-light: #E8F5E9;
+  --accent-pink: #F8BBD0;
+  --accent-pink-hover: #F48FB1;
+  --accent-pink-light: #FCE4EC;
+  --text-dark: #2C3E50;
+  --text-muted: #5A6B7C;
+  --bg-card: #FFFFFF;
+}
+
+body {
+  background: linear-gradient(135deg, #FFF0F5 0%, #F5FFFA 50%, #F0FFF0 100%) no-repeat fixed;
+  background-size: cover;
+  min-height: 100vh;
+  font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  color: var(--text-dark);
+}
+
+.nav-link {
+  color: var(--text-dark) !important;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.25s ease-in-out;
+  padding: 8px 16px !important;
+}
+
+.nav-link:hover {
+  background-color: rgba(165, 214, 167, 0.3) !important;
+  transform: translateY(-1px);
+}
+
+.active-link {
+  background-color: var(--primary-mint) !important;
+  color: #1b2631 !important;
+  box-shadow: 0 4px 10px rgba(165, 214, 167, 0.3);
+}
+
+/* NAVBAR CUSTOM */
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  padding: 12px 0 !important;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand-custom {
+  color: var(--text-dark) !important;
+  font-size: 1.45rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  transition: transform 0.2s;
+}
+
+.navbar-brand-custom:hover {
+  transform: scale(1.02);
+}
+
+.logo-icon {
+  font-size: 1.55rem;
+}
+
+.nav-link-custom {
+  color: var(--text-dark) !important;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  display: inline-block;
+}
+
+.nav-link-custom:hover {
+  background-color: rgba(255, 255, 255, 0.45);
+  color: var(--text-dark) !important;
+  transform: translateY(-1px);
+}
+
+.active-link-custom {
+  font-weight: 800 !important;
+  color: #000000 !important;
+  position: relative;
+}
+
+.active-link-custom::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 18px;
+  right: 18px;
+  height: 3px;
+  background-color: var(--primary-mint);
+  border-radius: 2px;
+}
+
+.btn-new-project-nav {
+  background-color: var(--accent-pink-light) !important;
+  color: var(--text-dark) !important;
+  box-shadow: 0 4px 12px rgba(248, 187, 208, 0.3);
+}
+
+.btn-new-project-nav:hover {
+  background-color: var(--accent-pink-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 15px rgba(248, 187, 208, 0.45) !important;
+}
